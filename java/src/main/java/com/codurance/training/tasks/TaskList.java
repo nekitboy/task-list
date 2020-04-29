@@ -16,8 +16,6 @@ public final class TaskList implements Runnable {
     private final BufferedReader in;
     private final PrintWriter out;
 
-    private long lastId = 0;
-
     public static void main(String[] args) throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
@@ -104,7 +102,7 @@ public final class TaskList implements Runnable {
             out.println();
             return;
         }
-        project.setTask(new Task(nextId(), description, false));
+        project.setTask(new Task(description, false));
     }
 
     private void check(String idString) {
@@ -144,9 +142,5 @@ public final class TaskList implements Runnable {
     private void error(String command) {
         out.printf("I don't know what the command \"%s\" is.", command);
         out.println();
-    }
-
-    private long nextId() {
-        return ++lastId;
     }
 }

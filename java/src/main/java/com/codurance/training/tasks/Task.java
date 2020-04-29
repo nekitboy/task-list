@@ -4,9 +4,20 @@ public final class Task {
     private final long id;
     private final String description;
     private boolean done;
+    private static long lastId = 0;
+
+    private static long nextId() {
+        return ++lastId;
+    }
 
     public Task(long id, String description, boolean done) {
         this.id = id;
+        this.description = description;
+        this.done = done;
+    }
+
+    public Task(String description, boolean done) {
+        this.id = nextId();
         this.description = description;
         this.done = done;
     }

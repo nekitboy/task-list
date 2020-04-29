@@ -1,8 +1,12 @@
 package com.codurance.training.tasks;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class TaskTest {
     String _description = "Description";
@@ -39,5 +43,17 @@ public class TaskTest {
 
         task.setDone(_done);
         assertEquals(_done, task.isDone());
+    }
+
+    @Test
+    public void nextTaskId() {
+        ArrayList<Long> ids = new ArrayList<>();
+
+        ids.add(new Task(_description, _done).getId());
+        ids.add(new Task(_description, _done).getId());
+        ids.add(new Task(_description, _done).getId());
+        ids.add(new Task(_description, _done).getId());
+
+        assertThat(ids, CoreMatchers.hasItems(1L, 2L, 3L, 4L));
     }
 }

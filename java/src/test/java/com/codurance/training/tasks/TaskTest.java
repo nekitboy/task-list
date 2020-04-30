@@ -48,7 +48,7 @@ public class TaskTest {
     @Test
     public void nextTaskId() {
         ArrayList<Long> ids = new ArrayList<>();
-
+        long id = Task.lastId = 0;
         ids.add(new Task(_description, _done).getId());
         ids.add(new Task(_description, _done).getId());
         ids.add(new Task(_description, _done).getId());

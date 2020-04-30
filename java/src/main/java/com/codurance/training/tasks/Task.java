@@ -4,7 +4,7 @@ public final class Task {
     private final long id;
     private final String description;
     private boolean done;
-    private static long lastId = 0;
+    protected static long lastId = 0;
 
     private static long nextId() {
         return ++lastId;

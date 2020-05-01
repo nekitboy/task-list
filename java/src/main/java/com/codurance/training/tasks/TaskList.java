@@ -1,37 +1,26 @@
 package com.codurance.training.tasks;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import com.codurance.training.tasks.action.ActionIdentifier;
+import com.codurance.training.tasks.action.Actions;
+import com.codurance.training.tasks.action.ActionsBuilder;
+
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
     private final Map<String, Project> tasks = new LinkedHashMap<>();
-    private final BufferedReader in;
-    private final PrintWriter out;
+    private final Console console;
 
-    public TaskList(BufferedReader reader, PrintWriter writer) {
-        this.in = reader;
-        this.out = writer;
+    public TaskList(Console console) {
+        this.console = console;
     }
 
     public void run() {
         while (true) {
-            out.print("> ");
-            out.flush();
-            String command;
-            try {
-                command = in.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (command.equals(QUIT)) {
+            String command = console.readCommand();
+            if (command.equals(TaskList.QUIT)) {
                 break;
             }
             execute(command);
@@ -41,37 +30,31 @@ public final class TaskList implements Runnable {
     private void execute(String commandLine) {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
-        switch (command) {
-            case "show":
-                show();
-                break;
-            case "add":
-                add(commandRest[1]);
-                break;
-            case "check":
-                check(commandRest[1]);
-                break;
-            case "uncheck":
-                uncheck(commandRest[1]);
-                break;
-            case "help":
-                help();
-                break;
-            default:
-                error(command);
-                break;
-        }
+        Actions commands = new ActionsBuilder()
+                .withAction(new ActionIdentifier("show"), this::show)
+                .withAction(new ActionIdentifier("add"), () -> add(commandRest[1]))
+                .withAction(new ActionIdentifier("check"), () -> check(commandRest[1]))
+                .withAction(new ActionIdentifier("uncheck"), () -> uncheck(commandRest[1]))
+                .withAction(new ActionIdentifier("help"), this::help)
+                .withDefault(() -> error(command))
+                .build();
+        commands.execute(new ActionIdentifier(command));
     }
 
     private void show() {
         for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
-            out.println(tasksEntry.getKey());
+            String output = tasksEntry.getKey();
             Project project = tasksEntry.getValue();
+            print(output);
             for (Task task : project.getTasks()) {
-                out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                console.writer.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
             }
-            out.println();
+            console.printNewLine();
         }
+    }
+
+    private void print(String output) {
+        console.writer.println(output);
     }
 
     private void add(String commandLine) {
@@ -92,8 +75,7 @@ public final class TaskList implements Runnable {
     private void addTask(String projectName, String description) {
         Project project = tasks.get(projectName);
         if (project == null) {
-            out.printf("Could not find a project with the name \"%s\".", project);
-            out.println();
+            console.printError("Could not find a project with the name \"%s\".", project);
             return;
         }
         project.setTask(new Task(description, false));
@@ -119,22 +101,21 @@ public final class TaskList implements Runnable {
                 return;
             }
         }
-        out.printf("Could not find a task with an ID of %d.", id);
-        out.println();
+        console.printError("Could not find a task with an ID of %d.", id);
     }
 
     private void help() {
-        out.println("Commands:");
-        out.println("  show");
-        out.println("  add project <project name>");
-        out.println("  add task <project name> <task description>");
-        out.println("  check <task ID>");
-        out.println("  uncheck <task ID>");
-        out.println();
+        print("Commands:");
+        print("  show");
+        print("  add project <project name>");
+        print("  add task <project name> <task description>");
+        print("  check <task ID>");
+        print("  uncheck <task ID>");
+        console.printNewLine();
     }
 
     private void error(String command) {
-        out.printf("I don't know what the command \"%s\" is.", command);
-        out.println();
+        String message = "I don't know what the command \"%s\" is.";
+        console.printError(message, command);
     }
 }

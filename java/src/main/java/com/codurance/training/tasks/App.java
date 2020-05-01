@@ -9,6 +9,6 @@ public class App {
     public static void main(String[] args) throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
-        new TaskList(in, out).run();
+        new TaskList(new Console(in, out)).run();
     }
 }

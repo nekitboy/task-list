@@ -15,9 +15,9 @@ public class ActionFactory {
             case "add":
                 return new ActionAdd(console, commandRest[1]);
             case "check":
-                return new ActionCheck(console, commandRest[1]);
+                return new ActionCheck(console, commandRest[1], true);
             case "uncheck":
-                return new ActionUncheck(console, commandRest[1]);
+                return new ActionCheck(console, commandRest[1], false);
             case "help":
                 return new ActionHelp();
         }

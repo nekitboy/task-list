@@ -10,31 +10,31 @@ import java.util.Map;
 
 public class ActionCheck extends Action {
 
+    private final boolean isDone;
     private Map<String, Project> tasks;
 
-    public ActionCheck(Console console, String command) {
+    public ActionCheck(Console console, String command, boolean isDone) {
         super(console, command);
+        this.isDone = isDone;
     }
 
     @Override
     public ActionStatus execute(Map<String, Project> tasks) {
         this.tasks = tasks;
-        setDone(command, true);
-        return ActionStatus.NONE;
-    }
-    // TODO remove duplicated code
-     private void setDone(String idString, boolean done) {
-        int id = Integer.parseInt(idString);
+
+        int id = Integer.parseInt(command);
 
         for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
             Project project = tasksEntry.getValue();
             Task task = project.getTask(id);
 
             if (task != null) {
-                task.setDone(done);
-                return;
+                task.setDone(isDone);
+                return ActionStatus.NONE;
             }
         }
         console.printError("Could not find a task with an ID of %d.", id);
+        return ActionStatus.NONE;
     }
+
 }

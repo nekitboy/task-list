@@ -10,4 +10,12 @@
 
 1. Action factory added. Now we can easily add new actions.
 
+1. Abstract class `Action`.
+
 1. Work with the console moved to `Console` class
+
+1. `delete <id>` command added
+
+1. `deadline <id> <date in format YYYY-DD-MM>` command added
+
+1. `today` command added

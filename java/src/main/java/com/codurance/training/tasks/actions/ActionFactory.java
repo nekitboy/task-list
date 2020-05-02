@@ -22,6 +22,8 @@ public class ActionFactory {
                 return new ActionCheck(console, commandRest[1], false);
             case "deadline":
                 return new ActionDeadline(console, commandRest[1]);
+            case "today":
+                return new ActionToday(console);
             case "help":
                 return new ActionHelp();
         }

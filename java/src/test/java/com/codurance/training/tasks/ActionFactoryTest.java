@@ -61,6 +61,12 @@ public class ActionFactoryTest {
     }
 
     @Test
+    public void today() {
+        Action action = ActionFactory.read("today", console);
+        assertThat(action, instanceOf(ActionToday.class));
+    }
+
+    @Test
     public void error() {
         Action action = ActionFactory.read("some errored text", console);
         assertThat(action, instanceOf(ActionError.class));

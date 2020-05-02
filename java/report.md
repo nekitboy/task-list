@@ -8,8 +8,6 @@
 
 1. Declare `App.java` to run Task Application (`TaskList`).
 
-1. `ActionIdentifier` class used to represent actions instead of String.
-
-1. Action builder added. Now we can easily extend actions functionality.
+1. Action factory added. Now we can easily add new actions.
 
 1. Work with the console moved to `Console` class

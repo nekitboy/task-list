@@ -14,6 +14,7 @@ public class ActionHelp extends Action {
         print("  show");
         print("  add project <project name>");
         print("  add task <project name> <task description>");
+        print("  delete <task ID>");
         print("  check <task ID>");
         print("  uncheck <task ID>");
         console.printNewLine();

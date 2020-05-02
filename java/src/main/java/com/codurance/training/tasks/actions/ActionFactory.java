@@ -14,6 +14,8 @@ public class ActionFactory {
                 return new ActionQuit();
             case "add":
                 return new ActionAdd(console, commandRest[1]);
+            case "delete":
+                return new ActionDelete(console, commandRest[1]);
             case "check":
                 return new ActionCheck(console, commandRest[1], true);
             case "uncheck":

@@ -31,6 +31,12 @@ public class ActionFactoryTest {
     }
 
     @Test
+    public void delete() {
+        Action action = ActionFactory.read("delete 1", console);
+        assertThat(action, instanceOf(ActionDelete.class));
+    }
+
+    @Test
     public void check() {
         Action action = ActionFactory.read("check 1", console);
         assertThat(action, instanceOf(ActionCheck.class));

@@ -6,32 +6,32 @@ import com.codurance.training.tasks.Task;
 import com.codurance.training.tasks.actions.Action;
 import com.codurance.training.tasks.actions.ActionStatus;
 
+import java.time.LocalDate;
 import java.util.Map;
 
-public class ActionCheck extends Action {
+public class ActionDeadline extends Action {
 
-    private final boolean isDone;
-
-    public ActionCheck(Console console, String command, boolean isDone) {
+    public ActionDeadline(Console console, String command) {
         super(console, command);
-        this.isDone = isDone;
     }
 
     @Override
     public ActionStatus execute(Map<String, Project> tasks) {
-        int id = Integer.parseInt(command);
+        String[] subcommandRest = command.split(" ", 2);
+
+        int id = Integer.parseInt(subcommandRest[0]);
+        LocalDate deadline = LocalDate.parse(subcommandRest[1]);
 
         for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
             Project project = tasksEntry.getValue();
             Task task = project.getTask(id);
 
             if (task != null) {
-                task.setDone(isDone);
+                task.setDeadline(deadline);
                 return ActionStatus.NONE;
             }
         }
         console.printError("Could not find a task with an ID of %d.", id);
         return ActionStatus.NONE;
     }
-
 }

@@ -21,7 +21,11 @@ public class ActionShow extends Action {
             Project project = tasksEntry.getValue();
             console.writer.println(output);
             for (Task task : project.getTasks()) {
-                console.writer.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                if (task.getDeadline() != null){
+                    console.writer.printf("    [%c] %d: %s DEADLINE: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription(), task.getDeadline().toString());
+                } else {
+                    console.writer.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                }
             }
             console.printNewLine();
         }

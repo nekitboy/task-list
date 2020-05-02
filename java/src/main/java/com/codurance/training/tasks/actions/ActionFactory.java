@@ -20,6 +20,8 @@ public class ActionFactory {
                 return new ActionCheck(console, commandRest[1], true);
             case "uncheck":
                 return new ActionCheck(console, commandRest[1], false);
+            case "deadline":
+                return new ActionDeadline(console, commandRest[1]);
             case "help":
                 return new ActionHelp();
         }

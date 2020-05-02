@@ -55,6 +55,12 @@ public class ActionFactoryTest {
     }
 
     @Test
+    public void deadline() {
+        Action action = ActionFactory.read("deadline 1 2000-01-01", console);
+        assertThat(action, instanceOf(ActionDeadline.class));
+    }
+
+    @Test
     public void error() {
         Action action = ActionFactory.read("some errored text", console);
         assertThat(action, instanceOf(ActionError.class));

@@ -7,7 +7,6 @@ import com.codurance.training.tasks.actions.Action;
 import com.codurance.training.tasks.actions.ActionStatus;
 
 import java.util.Map;
-import java.util.Set;
 
 public class ActionShow extends Action {
 

@@ -1,6 +1,5 @@
 package com.codurance.training.tasks;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

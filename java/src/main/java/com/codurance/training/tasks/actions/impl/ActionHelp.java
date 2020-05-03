@@ -22,7 +22,7 @@ public class ActionHelp extends Action {
         print("  add task <project name> <task description>");
         print("  share task <project name> <task ID>");
         print("  delete <task ID>");
-        print("  delete <task ID> <project name");
+        print("  delete <task ID> <project name>");
         print("  check <task ID>");
         print("  uncheck <task ID>");
         console.printNewLine();

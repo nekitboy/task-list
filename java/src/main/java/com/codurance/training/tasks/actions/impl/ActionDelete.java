@@ -31,9 +31,8 @@ public class ActionDelete extends Action {
         else {
             tasks.remove((long) id);
             for (Map.Entry<String, Project> tasksEntry : projects.entrySet()) {
-                String output = tasksEntry.getKey();
                 Project project = tasksEntry.getValue();
-                project.deleteTask((long) id);
+                project.deleteTask(id);
             }
         }
         return ActionStatus.NONE;

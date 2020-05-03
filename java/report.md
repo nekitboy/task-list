@@ -19,3 +19,6 @@
 1. `deadline <id> <date in format YYYY-DD-MM>` command added
 
 1. `today` command added
+
+1. Add same tasks in different projects. Add to `ActionHelp` description of new action `"  share task <project name> <task ID>"`
+To do this we declare tasks pool (as projects pool) in `TaskList`. Projects now knows about tasks ids that they have

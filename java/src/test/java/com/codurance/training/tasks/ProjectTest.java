@@ -21,20 +21,20 @@ public class ProjectTest {
     @Test
     public void getSetTaskTask() {
         Task _task = new Task(1, "Task", false);
-        project.setTask(_task);
+        project.addTask(_task.getId());
 
-        Task task = project.getTask(1);
+        Boolean isTask = project.getTasksIds().get(_task.getId());
 
         project = new Project(_name);
-        assertEquals(_task, task);
+        assertTrue(isTask);
     }
 
     @Test
     public void getTasks() {
-        project.setTask(new Task(1, "1", false));
-        project.setTask(new Task(2, "2", false));
+        project.addTask(1);
+        project.addTask(2);
 
-        List<Task> tasks = new ArrayList<>(project.getTasks());
+        List<Long> tasks = new ArrayList<>(project.getTasksIds().keySet());
 
         assertEquals(2, tasks.size());
         project = new Project(_name);
@@ -43,15 +43,15 @@ public class ProjectTest {
     @Test
     public void getTasksEmpty() {
 
-        List<Task> tasks = new ArrayList<>(project.getTasks());
+        List<Long> tasks = new ArrayList<>(project.getTasksIds().keySet());
 
         assertEquals(0, tasks.size());
     }
 
     @Test
     public void deleteTaskNull() {
-        Task task = project.deleteTask(1);
-
-        assertNull(task);
+        project.addTask(1);
+        project.deleteTask(1);
+        project.deleteTask(2);
     }
 }

@@ -2,7 +2,7 @@ package com.codurance.training.tasks;
 
 import java.time.LocalDate;
 
-public final class Task {
+public class Task {
     private final long id;
     private final String description;
     private LocalDate deadline;

@@ -18,14 +18,14 @@ public class ActionToday extends Action {
     }
 
     @Override
-    public ActionStatus execute(Map<String, Project> tasks) {
-        ;
+    public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
 
-        for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
+        for (Map.Entry<String, Project> tasksEntry : projects.entrySet()) {
             String output = tasksEntry.getKey();
             Project project = tasksEntry.getValue();
             console.writer.println(output);
-            for (Task task : project.getTasks()) {
+            for (Long taskId : project.getTasksIds().keySet()) {
+                Task task = tasks.get(taskId);
                 if (now(systemDefaultZone()).equals(task.getDeadline())) {
                     console.writer.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
                 }

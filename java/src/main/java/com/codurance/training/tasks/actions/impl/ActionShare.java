@@ -8,12 +8,12 @@ import com.codurance.training.tasks.actions.ActionStatus;
 
 import java.util.Map;
 
-public class ActionAdd extends Action {
+public class ActionShare extends Action {
 
     private Map<String, Project> projects;
     private Map<Long, Task> tasks;
 
-    public ActionAdd(Console console, String command) {
+    public ActionShare(Console console, String command) {
         super(console, command);
     }
 
@@ -21,29 +21,28 @@ public class ActionAdd extends Action {
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         this.projects = projects;
         this.tasks = tasks;
+
         String[] subcommandRest = command.split(" ", 2);
         String subcommand = subcommandRest[0];
-        if (subcommand.equals("project")) {
-            addProject(subcommandRest[1]);
-        } else if (subcommand.equals("task")) {
+        if (subcommand.equals("task")) {
             String[] projectTask = subcommandRest[1].split(" ", 2);
-            addTask(projectTask[0], projectTask[1]);
+            int id = Integer.parseInt(projectTask[1]);
+            shareTask(projectTask[0], id);
         }
         return ActionStatus.NONE;
     }
 
-    private void addProject(String name) {
-        projects.put(name, new Project(name));
-    }
-
-    private void addTask(String projectName, String description) {
-        Project project = projects.get(projectName);
+    private void shareTask(String projectName, int taskId) {
+        Task task = this.tasks.get((long) taskId);
+        Project project = this.projects.get(projectName);
+        if (task == null) {
+            console.printError("Could not find a task with the id \"%s\".", taskId);
+            return;
+        }
         if (project == null) {
             console.printError("Could not find a project with the name \"%s\".", projectName);
             return;
         }
-        Task task = new Task(description, false);
-        tasks.put(task.getId(), task);
         project.addTask(task.getId());
     }
 }

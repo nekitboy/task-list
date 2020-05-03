@@ -49,7 +49,7 @@ public final class DeleteTest {
 
     @Test(timeout = 1000) public void
     it_works() throws IOException, InterruptedException {
-
+        Task.lastId = 0;
         execute("show");
 
         execute("add project secrets");

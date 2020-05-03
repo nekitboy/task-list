@@ -13,19 +13,38 @@ public class ActionDelete extends Action {
     public ActionDelete(Console console, String command) {
         super(console, command);
     }
+    private Map<String, Project> projects;
 
     @Override
-    public ActionStatus execute(Map<String, Project> tasks) {
-        int id = Integer.parseInt(command);
-        for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
-            Project project = tasksEntry.getValue();
-            Task task = project.getTask(id);
-            if (task != null) {
-                project.deleteTask(id);
-                return ActionStatus.NONE;
+    public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
+        this.projects = projects;
+        String[] subcommandRest = command.split(" ", 2);
+        int id = Integer.parseInt(subcommandRest[0]);
+        Task task = tasks.get((long) id);
+        if (task == null) {
+            console.printError("Could not find a task with an ID of %d.", id);
+            return ActionStatus.NONE;
+        }
+        if (subcommandRest.length > 1 && subcommandRest[1] != null) {
+            deleteFromProject(subcommandRest[1], (long) id);
+        }
+        else {
+            tasks.remove((long) id);
+            for (Map.Entry<String, Project> tasksEntry : projects.entrySet()) {
+                String output = tasksEntry.getKey();
+                Project project = tasksEntry.getValue();
+                project.deleteTask((long) id);
             }
         }
-        console.printError("Could not find a task with an ID of %d.", id);
         return ActionStatus.NONE;
+    }
+
+    private void deleteFromProject(String projectName, Long id) {
+        Project project = projects.get(projectName);
+        if (project == null) {
+            console.printError("Could not find a project with the name %s.", projectName);
+            return;
+        }
+        project.deleteTask(id);
     }
 }

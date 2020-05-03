@@ -16,21 +16,19 @@ public class ActionDeadline extends Action {
     }
 
     @Override
-    public ActionStatus execute(Map<String, Project> tasks) {
+    public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         String[] subcommandRest = command.split(" ", 2);
 
         int id = Integer.parseInt(subcommandRest[0]);
         LocalDate deadline = LocalDate.parse(subcommandRest[1]);
 
-        for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
-            Project project = tasksEntry.getValue();
-            Task task = project.getTask(id);
+        Task task = tasks.get((long) id);
 
-            if (task != null) {
-                task.setDeadline(deadline);
-                return ActionStatus.NONE;
-            }
+        if (task != null) {
+            task.setDeadline(deadline);
+            return ActionStatus.NONE;
         }
+
         console.printError("Could not find a task with an ID of %d.", id);
         return ActionStatus.NONE;
     }

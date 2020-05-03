@@ -2,6 +2,7 @@ package com.codurance.training.tasks.actions;
 
 import com.codurance.training.tasks.Console;
 import com.codurance.training.tasks.Project;
+import com.codurance.training.tasks.Task;
 
 import java.util.Map;
 
@@ -26,9 +27,9 @@ public abstract class Action {
     }
 
     protected void print(String output) {
-        console.writer.println(output);
+        this.console.writer.println(output);
     }
 
-    abstract public ActionStatus execute(Map<String, Project> tasks);
+    abstract public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasksPool);
 
 }

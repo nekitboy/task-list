@@ -49,7 +49,7 @@ public final class TodayTest {
 
     @Test(timeout = 1000) public void
     it_works() throws IOException {
-
+        Task.lastId = 0;
 
 
         execute("show");

@@ -25,7 +25,9 @@ public class ActionFactory {
             case "today":
                 return new ActionToday(console);
             case "help":
-                return new ActionHelp();
+                return new ActionHelp(console);
+            case "share":
+                return new ActionShare(console, commandRest[1]);
         }
         return new ActionError();
     }

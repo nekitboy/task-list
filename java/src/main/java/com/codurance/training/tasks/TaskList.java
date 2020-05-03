@@ -9,7 +9,8 @@ import java.util.Map;
 
 public final class TaskList implements Runnable {
 
-    private final Map<String, Project> tasks = new LinkedHashMap<>();
+    private final Map<String, Project> projects = new LinkedHashMap<>();
+    private final Map<Long, Task> tasksPool = new LinkedHashMap<>();
     private final Console console;
 
     public TaskList(Console console) {
@@ -22,7 +23,7 @@ public final class TaskList implements Runnable {
         while (status != ActionStatus.QUIT) {
             String commandString = console.readCommand();
             action = ActionFactory.read(commandString, console);
-            status = action.execute(tasks);
+            status = action.execute(projects, tasksPool);
         }
     }
 }

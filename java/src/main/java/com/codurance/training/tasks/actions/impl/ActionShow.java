@@ -7,6 +7,7 @@ import com.codurance.training.tasks.actions.Action;
 import com.codurance.training.tasks.actions.ActionStatus;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ActionShow extends Action {
 
@@ -14,13 +15,15 @@ public class ActionShow extends Action {
         super(console);
     }
 
+
     @Override
-    public ActionStatus execute(Map<String, Project> tasks) {
-        for (Map.Entry<String, Project> tasksEntry : tasks.entrySet()) {
+    public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
+        for (Map.Entry<String, Project> tasksEntry : projects.entrySet()) {
             String output = tasksEntry.getKey();
             Project project = tasksEntry.getValue();
             console.writer.println(output);
-            for (Task task : project.getTasks()) {
+            for (Long taskId : project.getTasksIds().keySet()) {
+                Task task = tasks.get(taskId);
                 if (task.getDeadline() != null){
                     console.writer.printf("    [%c] %d: %s DEADLINE: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription(), task.getDeadline().toString());
                 } else {

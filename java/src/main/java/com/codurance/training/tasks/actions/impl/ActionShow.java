@@ -15,6 +15,13 @@ public class ActionShow extends Action {
     }
 
 
+    /**
+     * Shows task-list
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         for (Map.Entry<String, Project> tasksEntry : projects.entrySet()) {

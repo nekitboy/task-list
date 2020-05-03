@@ -6,6 +6,11 @@ import com.codurance.training.tasks.actions.impl.*;
 public class ActionFactory {
     private ActionFactory() {}
 
+    /**
+     * @param commandString user command
+     * @param console IO console
+     * @return Action that corresponds to user command
+     */
     public static Action read(String commandString, Console console) {
         String[] commandRest = commandString.split(" ", 2);
         String command = commandRest[0];

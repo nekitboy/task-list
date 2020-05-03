@@ -17,6 +17,13 @@ public class ActionAdd extends Action {
         super(console, command);
     }
 
+    /**
+     * Adds new project or task
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         this.projects = projects;
@@ -32,10 +39,21 @@ public class ActionAdd extends Action {
         return ActionStatus.NONE;
     }
 
+    /**
+     * Adds new project
+     *
+     * @param name project name
+     */
     private void addProject(String name) {
         projects.put(name, new Project(name));
     }
 
+    /**
+     * Adds task to project
+     *
+     * @param projectName project in which task should be added
+     * @param description task description
+     */
     private void addTask(String projectName, String description) {
         Project project = projects.get(projectName);
         if (project == null) {

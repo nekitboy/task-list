@@ -15,6 +15,13 @@ public class ActionDeadline extends Action {
         super(console, command);
     }
 
+    /**
+     * Adds deadline to task
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         String[] subcommandRest = command.split(" ", 2);

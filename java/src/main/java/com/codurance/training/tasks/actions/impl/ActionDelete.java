@@ -15,6 +15,13 @@ public class ActionDelete extends Action {
     }
     private Map<String, Project> projects;
 
+    /**
+     * Deletes task
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         this.projects = projects;

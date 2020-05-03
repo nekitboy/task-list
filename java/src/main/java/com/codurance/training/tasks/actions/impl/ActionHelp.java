@@ -14,6 +14,13 @@ public class ActionHelp extends Action {
         super(console);
     }
 
+    /**
+     * Displays help message
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         print("Commands:");

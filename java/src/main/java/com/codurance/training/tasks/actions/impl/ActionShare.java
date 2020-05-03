@@ -17,6 +17,13 @@ public class ActionShare extends Action {
         super(console, command);
     }
 
+    /**
+     * Shares task between projects
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         this.projects = projects;
@@ -32,6 +39,12 @@ public class ActionShare extends Action {
         return ActionStatus.NONE;
     }
 
+    /**
+     * Adds task with id `taskId` to project `projectName`
+     *
+     * @param projectName project name
+     * @param taskId task id
+     */
     private void shareTask(String projectName, int taskId) {
         Task task = this.tasks.get((long) taskId);
         Project project = this.projects.get(projectName);

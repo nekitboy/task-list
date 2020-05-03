@@ -17,6 +17,13 @@ public class ActionToday extends Action {
         super(console);
     }
 
+    /**
+     * Shows tasks due today
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
 

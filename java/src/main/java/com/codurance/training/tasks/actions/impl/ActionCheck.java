@@ -17,6 +17,13 @@ public class ActionCheck extends Action {
         this.isDone = isDone;
     }
 
+    /**
+     * Checks or Unchecks task
+     *
+     * @param projects projects pool
+     * @param tasks tasks pool
+     * @return status of action execution
+     */
     @Override
     public ActionStatus execute(Map<String, Project> projects, Map<Long, Task> tasks) {
         int id = Integer.parseInt(command);

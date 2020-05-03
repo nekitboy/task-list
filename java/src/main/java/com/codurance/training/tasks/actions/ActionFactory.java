@@ -4,6 +4,8 @@ import com.codurance.training.tasks.Console;
 import com.codurance.training.tasks.actions.impl.*;
 
 public class ActionFactory {
+    private ActionFactory() {}
+
     public static Action read(String commandString, Console console) {
         String[] commandRest = commandString.split(" ", 2);
         String command = commandRest[0];
